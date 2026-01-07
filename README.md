@@ -199,3 +199,7 @@ CI/CD test trigger – README update
 
 TEST(2):
 CI/CD test trigger – README update
+
+TESR (3):
+Kubernetes optimization of CI-CD pipeline
+

@@ -28,6 +28,44 @@ jobs:
           cd backend
           npm install
 
+name: MERN CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # =======================
+      # CHECKOUT
+      # =======================
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # =======================
+      # NODE SETUP (CI)
+      # =======================
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # =======================
+      # BACKEND CI
+      # =======================
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
+
+      # =======================
+      # FRONTEND CI
+      # =======================
       - name: Install frontend dependencies
         run: |
           cd frontend
@@ -39,9 +77,8 @@ jobs:
           npm run build
 
       # =======================
-      # CD PART
+      # DOCKER SETUP
       # =======================
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -51,16 +88,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # =======================
+      # BUILD & PUSH BACKEND IMAGE (MULTI-ARCH)
+      # =======================
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
           context: ./backend
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ahmedasif123/mern-task-manager-backend:latest
 
+      # =======================
+      # BUILD & PUSH FRONTEND IMAGE (MULTI-ARCH)
+      # =======================
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ahmedasif123/mern-task-manager-frontend:latest

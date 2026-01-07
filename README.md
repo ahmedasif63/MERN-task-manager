@@ -193,3 +193,6 @@ Inside backend folder:
 - Linkedin: https://www.linkedin.com/in/aayush12/
 # trigger ci
 test: trigger ci cd pipeline
+
+TEST(1):
+CI/CD test trigger – README update 

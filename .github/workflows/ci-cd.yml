@@ -56,11 +56,11 @@ jobs:
         with:
           context: ./backend
           push: true
+          tags: ahmedasif123/mern-task-manager-backend:latest
 
-tags: ahmedasif123/mern-task-manager-backend:latest
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
-tags: ahmedasif123/mern-task-manager-backend:latest
+          tags: ahmedasif123/mern-task-manager-frontend:latest

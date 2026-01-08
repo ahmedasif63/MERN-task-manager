@@ -1,207 +1,152 @@
-# MERN Task Manager
+# MERN Task Manager – Containerized with CI/CD
 
-A MERN application for basic tasks management.
-![image](https://user-images.githubusercontent.com/86913048/227101123-f8a35258-9c21-4479-86e8-055659ab75e2.png)
+## Project Overview
 
-## Table of Contents
+This project is a **MERN Task Manager application** that has been fully containerized using **Docker** and integrated with a **CI/CD pipeline using GitHub Actions**. The goal of this project is to demonstrate practical implementation of **containerization, version control collaboration, and automated pipelines** as part of our semester DevOps project.
 
-- [Features](#features)
-- [Tools and Technologies](#tools-and-technologies)
-- [Dependencies](#dependencies)
-- [Dev-dependencies](#dev-dependencies)
-- [Prerequisites](#prerequisites)
-- [Installation and setup](#installation-and-setup)
-- [Backend API](#backend-api)
-- [frontend pages](#frontend-pages)
-- [npm scripts](#npm-scripts)
-- [Useful Links](#useful-links)
-- [Contact](#contact)
+The application consists of:
 
-## Features
+* **Frontend**: React
+* **Backend**: Node.js + Express
+* **Database**: MongoDB
 
-### User-side features
+All services are orchestrated using **Docker Compose**, and the build + image publishing process is automated using **GitHub Actions CI/CD pipeline**.
 
-- Signup
-- Login
-- Logout
-- Add tasks
-- View tasks
-- Update tasks
-- Delete tasks
 
-### Developer-side features
+## Team Information
 
-- Toasts for success and error messages
-- Form validations in frontend and backend
-- Fully Responsive Navbar
-- Token based Authentication
-- Use of 404 page for wrong urls
-- Relevant redirects
-- Global user state using Redux
-- Custom Loaders
-- Use of layout component for pages
-- Use of theme colors
-- No external CSS files needed (made using Tailwind CSS)
-- Usage of Tooltips
-- Dynamic document titles
-- Redirect to previous page after login
-- Use of various React hooks
-- Custom hook also used (useFetch)
-- Routes protection
-- Middleware for verifying the user in backend
-- Use of different HTTP status codes for sending responses
-- Standard pratices followed
+| Name              | Registration Number |
+| ----------------- | ------------------- |
+| Ahmed Asif        | F2023-624           |
+| Mirsab Ahmed khan | F2023-468           |
 
-## Tools and Technologies
 
-- HTML
-- CSS
-- Javascript
-- Tailwind CSS
-- Node.js
-- Express.js
-- React
-- Redux
-- Mongodb
 
-## Dependencies
+## Project Objectives
 
-Following are the major dependencies of the project:
+* Understand and implement **Docker containerization** for a multi-service MERN application
+* Implement **CI/CD pipeline** using GitHub Actions
+* Automate:
 
-- axios
-- react
-- react-dom
-- react-redux
-- react-router-dom
-- react-toastify
-- redux
-- redux-thunk
-- bcrypt
-- cors
-- dotenv
-- express
-- jsonwebtoken
-- mongoose
+  * Dependency installation
+  * Frontend build
+  * Docker image build
+  * Docker image push to DockerHub
+* Practice **Git collaboration workflow** using branches and merges
 
-## Dev-dependencies
 
-Following are the major dev-dependencies of the project:
+## Containerization Approach
 
-- nodemon
-- concurrently
+We containerized each component separately:
 
-## Prerequisites
+### 1. Backend Container
 
-- Node.js must be installed on the system.
-- You should have a MongoDB database.
-- You should have a code editor (preferred: VS Code)
+* Node.js base image
+* Installs dependencies
+* Exposes port **5000**
+* Connects to MongoDB using environment variables
 
-## Installation and Setup
+### 2. Frontend Container
 
-1. Install all the dependencies
+* Node.js base image
+* Builds React application
+* Exposes port **3000**
 
-   ```sh
-   npm run install-all
-   ```
+### 3. MongoDB Container
 
-2. Create a file named ".env" inside the backend folder. Add data from .env.example file and substitute your credentials there.
+* Official MongoDB image
+* Uses **Docker volumes** for persistent data storage
 
-3. Start the application
+### 4. Docker Compose
 
-   ```sh
-   npm run dev
-   ```
+All services are orchestrated using `docker-compose.yml`:
 
-4. Go to http://localhost:3000
+* frontend
+* backend
+* mongo
 
-## Backend API
+This allows the entire system to be started with a single command:
 
-<pre>
-- POST     /api/auth/signup
-- POST     /api/auth/login
-- GET      /api/tasks
-- GET      /api/tasks/:taskId
-- POST     /api/tasks
-- PUT      /api/tasks/:taskId
-- DELETE   /api/tasks/:taskId
-- GET      /api/profile
-</pre>
+```
+docker compose up --build
+```
 
-## Frontend pages
 
-<pre>
-- /                 Home Screen (Public home page for guests and private dashboard (tasks) for logged-in users)
-- /signup           Signup page
-- /login            Login page
-- /tasks/add        Add new task
-- /tasks/:taskId    Edit a task
-</pre>
 
-## npm scripts
+## CI/CD Pipeline
 
-At root:
+We implemented a **GitHub Actions CI/CD pipeline** that runs automatically on every push or pull request to the `main` or `dev` branch.
 
-- `npm run dev`: Starts both backend and frontend
-- `npm run dev-server`: Starts only backend
-- `npm run dev-client`: Starts only frontend
-- `npm run install-all`: Installs all dependencies and dev-dependencies required at root, at frontend and at backend.
+### CI (Continuous Integration)
 
-Inside frontend folder:
+* Checkout code
+* Setup Node.js
+* Install backend dependencies
+* Install frontend dependencies
+* Build frontend
 
-- `npm start`: Starts frontend in development mode
-- `npm run build`: Builds the frontend for production to the build folder
-- `npm test`: Launches the test runner in the interactive watch mode
-- `npm run eject`: This will remove the single build dependency from the frontend.
+### CD (Continuous Delivery)
 
-Inside backend folder:
+* Setup Docker Buildx
+* Login to DockerHub using GitHub Secrets
+* Build backend Docker image
+* Push backend image to DockerHub
+* Build frontend Docker image
+* Push frontend image to DockerHub
 
-- `npm run dev`: Starts backend using nodemon.
-- `npm start`: Starts backend without nodemon.
+This ensures that every code change is automatically built and converted into Docker images without manual intervention.
 
-## Useful Links
 
-- This project
 
-  - Github Repo: https://github.com/aayush301/MERN-task-manager
+## Technologies Used
 
-- Official Docs
+* Node.js
+* Express.js
+* React
+* MongoDB
+* Docker
+* Docker Compose
+* GitHub Actions
+* Git & GitHub
 
-  - Reactjs docs: https://reactjs.org/docs/getting-started.html
-  - npmjs docs: https://docs.npmjs.com/
-  - Mongodb docs: https://docs.mongodb.com/manual/introduction/
-  - Github docs: https://docs.github.com/en/get-started/quickstart/hello-world
 
-- Youtube tutorials
 
-  - Expressjs: https://youtu.be/L72fhGm1tfE
-  - React: https://youtu.be/EHTWMpD6S_0
-  - Redux: https://youtu.be/1oU_YGhT7ck
+## How to Run the Project Locally
 
-- Download links
+1. Clone the repository
+2. Navigate to the project root
+3. Run:
 
-  - Nodejs download: https://nodejs.org/
-  - VS Code download: https://code.visualstudio.com/
+```
+docker compose up --build
+```
 
-- Cheatsheets
-  - Git cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf
-  - VS Code keyboard shortcuts: https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
-  - CSS Selectors Cheatsheet: https://frontend30.com/css-selectors-cheatsheet/
+4. Open browser:
 
-## Contact
+   * Frontend: [http://localhost:3000](http://localhost:3000)
+   * Backend: [http://localhost:5000](http://localhost:5000)
 
-- Email: aayush5521186@gmail.com
-- Linkedin: https://www.linkedin.com/in/aayush12/
-# trigger ci
-test: trigger ci cd pipeline
 
-TEST(1):
-CI/CD test trigger – README update 
 
-TEST(2):
-CI/CD test trigger – README update
+## Learning Outcomes
 
-TESR (3):
-Kubernetes optimization of CI-CD pipeline
+Through this project, we learned:
 
-test (4)
-CI-CD pipeline run.
+* Real-world Docker containerization
+* Multi-service orchestration with Docker Compose
+* CI/CD pipeline creation using GitHub Actions
+* Docker image publishing to DockerHub
+* Git branching, merging, and collaboration workflows
+
+
+
+## Notes
+
+* This project focuses on **Containerization + CI/CD** only.
+* No cloud deployment or Kubernetes is included in this scope as per project requirements.
+
+
+
+## Acknowledgment
+
+This project was developed as part of our **Semester DevOps Project** to gain hands-on experience with modern DevOps tools and practices.
